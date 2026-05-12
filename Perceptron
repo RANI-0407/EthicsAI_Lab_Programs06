@@ -1,0 +1,23 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import Perceptron
+from sklearn.metrics import accuracy_score
+
+# Load data
+url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
+cols = ['sl','sw','pl','pw','species']
+data = pd.read_csv(url, names=cols)
+
+X = data.drop('species', axis=1)
+y = data['species']
+
+# Split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+# Without bias
+m1 = Perceptron(fit_intercept=False).fit(X_train, y_train)
+print("Without Bias:", accuracy_score(y_test, m1.predict(X_test)))
+
+# With bias
+m2 = Perceptron().fit(X_train, y_train)
+print("With Bias:", accuracy_score(y_test, m2.predict(X_test)))

@@ -1,0 +1,20 @@
+from rdflib import Graph, Namespace, RDF, RDFS, Literal
+
+g = Graph()
+EX = Namespace("http://ex.org/")
+
+# Classes & property
+g.add((EX.JobApplicant, RDF.type, RDFS.Class))
+g.add((EX.EligibleCandidate, RDFS.subClassOf, EX.JobApplicant))
+g.add((EX.hasExperience, RDF.type, RDF.Property))
+
+# Data
+g.add((EX.Alice, RDF.type, EX.JobApplicant))
+g.add((EX.Alice, EX.hasExperience, Literal(5)))
+
+g.add((EX.Bob, RDF.type, EX.EligibleCandidate))
+g.add((EX.Bob, EX.hasExperience, Literal(5)))
+
+# Print
+for s in g:
+    print(s)

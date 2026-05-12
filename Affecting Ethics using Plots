@@ -1,0 +1,17 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LogisticRegression
+
+x = np.random.rand(200, 1)
+g = np.random.randint(0, 2, 200)
+y = (x[:,0] + g*0.5 > 0.8).astype(int)
+
+m = LogisticRegression().fit(np.c_[x, g], y)
+p = m.predict(np.c_[x, g])
+
+r0 = p[g==0].mean()
+r1 = p[g==1].mean()
+
+plt.bar(["Group0", "Group1"], [r0, r1])
+plt.title("Bias from optimization")
+plt.show()
